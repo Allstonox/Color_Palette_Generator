@@ -1,0 +1,143 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    font-family: sans-serif;
+    margin: 0px;
+    color: white;
+}
+
+html {
+    background-color: white;
+}
+
+body {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    padding: 1rem 1rem;
+    height: auto;
+    width: 100%;
+    max-width: 1300px;
+    background-color: white;
+}
+
+#copy-message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0rem 1rem;
+    border-radius: 2rem;
+    text-align: center;
+    background: black;
+    width: auto;
+    height: 50px;
+    position: fixed;
+    top: 120vh;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    transition: all 0.1s linear;
+}
+
+#copy-message ion-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.slide-fade {
+    top: 90vh !important;
+}
+
+#intro-wrapper {
+    width: 100%;
+    height: auto;
+    padding: 5rem 0rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 2rem;
+}
+
+
+#palettes {
+    width: 100%;
+    height: auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(auto, 1fr);
+    gap: 4em 2rem;
+}
+
+.palette {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 120px;
+    border-radius: 0.7rem;
+    overflow: hidden;
+}
+
+.palette-color {
+    position: relative;
+    width: 20%;
+    height: 100%;
+    transition: all 0.1s linear;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.color-hexcode {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: all 0.1s linear;
+    pointer-events: none;
+}
+
+.palette-color:hover, .palette-color:focus {
+    width: 40%;
+}
+
+.palette-color:hover > .color-hexcode {
+    opacity: 1;
+}
+
+@media screen and (max-width:900px) {
+    #palettes {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(auto, 1fr);
+    }
+
+    #intro-wrapper {
+        padding: 3rem 0rem;
+    }
+
+    #intro-wrapper h1 {
+        font-size: 3rem !important;
+    }
+
+    #intro-wrapper h3 {
+        width: 70% !important;
+        font-size: 1.5rem !important;
+    }
+}
+
+@media screen and (max-width:500px) {
+    #palettes {
+        grid-template-columns: repeat(1, 1fr);
+        grid-template-rows: repeat(auto, 1fr);
+    }
+}
