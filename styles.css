@@ -119,12 +119,12 @@ body {
 }
 
 .palette-color:hover,
-.palette-color:active {
+.palette-color:focus {
     width: 40%;
 }
 
 .palette-color:hover>.color-hexcode,
- .palette-color:active>.color-hexcode {
+ .palette-color:focus>.color-hexcode {
     opacity: 1;
 }
 
