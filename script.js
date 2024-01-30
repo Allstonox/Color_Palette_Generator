@@ -51,7 +51,7 @@ function generatePaletteColors() {
     //Pick random starting color
     let startingHue = Math.floor(Math.random() * 360);
     let startingSaturation = mapValue(0, 100, 20, 80, Math.random() * 100);
-    let startingBrightness = mapValue(0, 100, 20, 80, Math.random() * 100);
+    let startingBrightness = mapValue(0, 100, 35, 80, Math.random() * 100);
     palette.push({ hue: startingHue, saturation: startingSaturation, brightness: startingBrightness });
 
     //Define complementary color
@@ -77,44 +77,44 @@ function generatePaletteColors() {
         let colorChangeVal = 15;
         if (colorChosen === 'main') {
             if (Math.random() > 0.5) {
-                randomHue = startingHue + Math.floor(Math.random() * colorChangeVal);
+                randomHue = startingHue + mapValue(0, 15, 5, 15, Math.random() * colorChangeVal);
             }
             else {
-                randomHue = startingHue - Math.floor(Math.random() * colorChangeVal);
+                randomHue = startingHue - mapValue(0, 15, 5, 15, Math.random() * colorChangeVal);
             }
             if (Math.random() > 0.5) {
-                randomSaturation = startingSaturation + Math.floor(Math.random() * colorChangeVal);
+                randomSaturation = startingSaturation + mapValue(0, 15, 5, 15, Math.random() * colorChangeVal);
             }
             else {
-                randomSaturation = startingSaturation - Math.floor(Math.random() * colorChangeVal);
+                randomSaturation = startingSaturation - mapValue(0, 15, 5, 15, Math.random() * colorChangeVal);
             }
             if (Math.random() > 0.5) {
-                randomBrightness = startingBrightness + Math.floor(Math.random() * colorChangeVal);
+                randomBrightness = startingBrightness + mapValue(0, 15, 5, 15, Math.random() * colorChangeVal);
             }
             else {
-                randomBrightness = startingBrightness - Math.floor(Math.random() * colorChangeVal);
+                randomBrightness = startingBrightness - mapValue(0, 15, 5, 15, Math.random() * colorChangeVal);
             }
             palette.push({ hue: randomHue, saturation: randomSaturation, brightness: randomBrightness });
         }
 
         else {
             if (Math.random() > 0.5) {
-                randomHue = complementaryHue + Math.floor(Math.random() * colorChangeVal);
+                randomHue = complementaryHue + mapValue(0, 15, 5, 15, Math.random() * colorChangeVal);
             }
             else {
-                randomHue = complementaryHue - Math.floor(Math.random() * colorChangeVal);
+                randomHue = complementaryHue - mapValue(0, 15, 5, 15, Math.random() * colorChangeVal);
             }
             if (Math.random() > 0.5) {
-                randomSaturation = complementarySaturation + Math.floor(Math.random() * colorChangeVal);
+                randomSaturation = complementarySaturation + mapValue(0, 15, 5, 15, Math.random() * colorChangeVal);
             }
             else {
-                randomSaturation = complementarySaturation - Math.floor(Math.random() * colorChangeVal);
+                randomSaturation = complementarySaturation - mapValue(0, 15, 5, 15, Math.random() * colorChangeVal);
             }
             if (Math.random() > 0.5) {
-                randomBrightness = complementaryBrightness + Math.floor(Math.random() * colorChangeVal);
+                randomBrightness = complementaryBrightness + mapValue(0, 15, 5, 15, Math.random() * colorChangeVal);
             }
             else {
-                randomBrightness = complementaryBrightness - Math.floor(Math.random() * colorChangeVal);
+                randomBrightness = complementaryBrightness - mapValue(0, 15, 5, 15, Math.random() * colorChangeVal);
             }
             palette.push({ hue: randomHue, saturation: randomSaturation, brightness: randomBrightness });
         }
