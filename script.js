@@ -23,7 +23,7 @@ function generateNewPalette() {
                 <div class="color-hexcode" style="color: ${paletteColors[4].textColor}">${hslToHex(paletteColors[4].hue, paletteColors[4].saturation, paletteColors[4].brightness)}</div>
             </div>
     `;
-    newPalette.addEventListener('click', (e) => {
+    newPalette.addEventListener('mouseup', (e) => {
         navigator.clipboard.writeText(e.target.innerText);
         toggleCopyMessage(e.target);
     })
