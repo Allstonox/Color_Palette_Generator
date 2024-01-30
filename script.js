@@ -8,19 +8,19 @@ function generateNewPalette() {
     let paletteColors = generatePaletteColors();
     newPalette.innerHTML = `
             <div class="palette-color" style="background-color: hsl(${paletteColors[0].hue}, ${paletteColors[0].saturation}%, ${paletteColors[0].brightness}%);">
-                <div class="color-hexcode">${hslToHex(paletteColors[0].hue, paletteColors[0].saturation, paletteColors[0].brightness)}</div>
+                <div class="color-hexcode" style="color: ${paletteColors[0].textColor}">${hslToHex(paletteColors[0].hue, paletteColors[0].saturation, paletteColors[0].brightness)}</div>
             </div>
             <div class="palette-color" style="background-color: hsl(${paletteColors[1].hue}, ${paletteColors[1].saturation}%, ${paletteColors[1].brightness}%);">
-                <div class="color-hexcode">${hslToHex(paletteColors[1].hue, paletteColors[1].saturation, paletteColors[1].brightness)}</div>
+                <div class="color-hexcode" style="color: ${paletteColors[1].textColor}">${hslToHex(paletteColors[1].hue, paletteColors[1].saturation, paletteColors[1].brightness)}</div>
             </div>
             <div class="palette-color" style="background-color: hsl(${paletteColors[2].hue}, ${paletteColors[2].saturation}%, ${paletteColors[2].brightness}%);">
-                <div class="color-hexcode">${hslToHex(paletteColors[2].hue, paletteColors[2].saturation, paletteColors[2].brightness)}</div>
+                <div class="color-hexcode" style="color: ${paletteColors[2].textColor}">${hslToHex(paletteColors[2].hue, paletteColors[2].saturation, paletteColors[2].brightness)}</div>
             </div>
             <div class="palette-color" style="background-color: hsl(${paletteColors[3].hue}, ${paletteColors[3].saturation}%, ${paletteColors[3].brightness}%);">
-                <div class="color-hexcode">${hslToHex(paletteColors[3].hue, paletteColors[3].saturation, paletteColors[3].brightness)}</div>
+                <div class="color-hexcode" style="color: ${paletteColors[3].textColor}">${hslToHex(paletteColors[3].hue, paletteColors[3].saturation, paletteColors[3].brightness)}</div>
             </div>
             <div class="palette-color" style="background-color: hsl(${paletteColors[4].hue}, ${paletteColors[4].saturation}%, ${paletteColors[4].brightness}%);">
-                <div class="color-hexcode">${hslToHex(paletteColors[4].hue, paletteColors[4].saturation, paletteColors[4].brightness)}</div>
+                <div class="color-hexcode" style="color: ${paletteColors[4].textColor}">${hslToHex(paletteColors[4].hue, paletteColors[4].saturation, paletteColors[4].brightness)}</div>
             </div>
     `;
     newPalette.addEventListener('click', (e) => {
@@ -45,24 +45,13 @@ function toggleCopyMessage(paletteClicked) {
     }
 }
 
-function toggleCheckMark(paletteClicked) {
-    let colorValue = paletteClicked.innerText;
-    if(!copyMessageToggled) {
-        paletteClicked.innerHTML = `<ion-icon name="checkmark-outline" style="width: 30px; height: 30px"></ion-icon>`;
-        // window.setTimeout(() => {
-        //     copyMessage.classList.toggle('slide-fade');
-        //     copyMessageToggled = false
-        // }, 2000)
-    }
-}
-
 function generatePaletteColors() {
     let palette = [];
 
     //Pick random starting color
     let startingHue = Math.floor(Math.random() * 360);
-    let startingSaturation = constrain(Math.floor(Math.random() * 100), 50, 80);
-    let startingBrightness = constrain(Math.floor(Math.random() * 100), 50, 80);
+    let startingSaturation = mapValue(0, 100, 20, 80, Math.random() * 100);
+    let startingBrightness = mapValue(0, 100, 20, 80, Math.random() * 100);
     palette.push({ hue: startingHue, saturation: startingSaturation, brightness: startingBrightness });
 
     //Define complementary color
@@ -85,7 +74,7 @@ function generatePaletteColors() {
         let randomHue;
         let randomSaturation;
         let randomBrightness;
-        let colorChangeVal = 20;
+        let colorChangeVal = 15;
         if (colorChosen === 'main') {
             if (Math.random() > 0.5) {
                 randomHue = startingHue + Math.floor(Math.random() * colorChangeVal);
@@ -130,6 +119,10 @@ function generatePaletteColors() {
             palette.push({ hue: randomHue, saturation: randomSaturation, brightness: randomBrightness });
         }
     }
+    palette.forEach((color) => {
+        if(color.brightness > 70) color.textColor = 'black';
+        else color.textColor = 'white';
+    })
     return palette;
 }
 

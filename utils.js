@@ -2,6 +2,11 @@ function constrain(value, minVal, maxVal) {
     return Math.min(Math.max(value, maxVal), minVal);
 }
 
+function mapValue(minStarting, maxStarting, minEnding, maxEnding, valueToMap) {
+    let valToAdd = (valueToMap / (maxStarting - minStarting)) * (maxEnding - minEnding);
+    return Math.floor(minEnding + valToAdd);
+}
+
 function hslToHex(h, s, l) {
     // Convert the inputs to numbers
     h = Number(h);
