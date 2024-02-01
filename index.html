@@ -16,10 +16,19 @@
         <h3 style="width: 50%; text-align: center; color: rgb(125, 125, 125); font-size: 1.5rem; font-weight: 100;">The
             most boosted color palette generator online!</h3>
     </section>
+    <nav>
+        <div onclick="toggleMenu('#palette-menu')" id="palette-type">Palette Type <ion-icon name="chevron-down-outline" style="color: var(--light-text);"></ion-icon></div>
+        <ul id="palette-menu">
+            <li onclick="selectPaletteType('complementary')">Complementary <ion-icon name="checkmark-outline" style="color: grey;"></ion-icon></li>
+            <li onclick="selectPaletteType('monochromatic')">Monochromatic</li>
+            <li onclick="selectPaletteType('random')">Random</li>
+        </ul>
+    </nav>
     <div id="palettes"></div>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <script src="utils.js"></script>
+    <script src="paletteFunctions.js"></script>
     <script src="script.js"></script>
 </body>
 

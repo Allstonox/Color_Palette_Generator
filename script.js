@@ -1,11 +1,12 @@
-let paletteNumber = 50;
+let paletteNumber = 40;
 let paletteGrid = document.querySelector('#palettes');
 let copyMessage = document.querySelector('#copy-message');
+let currentPaletteType = 'complementary';
 
-function generateNewPalette() {
+function generateNewPalette(paletteType = 'complementary') {
     let newPalette = document.createElement('div');
     newPalette.classList.add('palette');
-    let paletteColors = generatePaletteColors();
+    let paletteColors = generatePaletteColors(paletteType);
     newPalette.innerHTML = `
             <div class="palette-color" style="background-color: hsl(${paletteColors[0].hue}, ${paletteColors[0].saturation}%, ${paletteColors[0].brightness}%);">
                 <div class="color-hexcode" style="color: ${paletteColors[0].textColor}">${hslToHex(paletteColors[0].hue, paletteColors[0].saturation, paletteColors[0].brightness)}</div>
@@ -46,70 +47,92 @@ function toggleCopyMessage(paletteClicked) {
     }
 }
 
-function generatePaletteColors() {
+// function generatePaletteColors() {
+//     let palette = [];
+
+//     //Pick random starting color
+//     let startingHue = Math.floor(Math.random() * 360);
+//     let startingSaturation = mapValue(0, 100, 20, 80, Math.random() * 100);
+//     let startingBrightness = mapValue(0, 100, 35, 80, Math.random() * 100);
+//     palette.push({ hue: startingHue, saturation: startingSaturation, brightness: startingBrightness });
+
+//     //Define complementary color
+//     let complementaryHue = Math.abs(startingHue + 180 % 360);
+//     let complementarySaturation = startingSaturation;
+//     let complementaryBrightness = startingBrightness;
+//     palette.push({ hue: complementaryHue, saturation: complementarySaturation, brightness: complementaryBrightness });
+
+//     //Define other 3 colors by picking base color randomly between main and complementary
+//     for (let i = 0; i < 3; i++) {
+//         let colorChosen;
+//         if (Math.random() > 0.5) {
+//             colorChosen = {
+//                 hue: startingHue,
+//                 saturation: startingSaturation,
+//                 brightness: startingBrightness,
+//             }
+//         }
+//         else {
+//             colorChosen = {
+//                 hue: complementaryHue,
+//                 saturation: complementarySaturation,
+//                 brightness: complementaryBrightness,
+//             }
+//         }
+
+//         //Define random color based on base color chosen
+//         let randomHue;
+//         let randomSaturation;
+//         let randomBrightness;
+//         let colorChangeMin = 5;
+//         let colorChangeMax = 15;
+//         let colorChangeRange = 10;
+//         if (Math.random() > 0.5) {
+//             randomHue = colorChosen.hue + mapValue(0, 15, colorChangeMin, colorChangeMax, Math.random() * colorChangeRange);
+//         }
+//         else {
+//             randomHue = colorChosen.hue - mapValue(0, 15, colorChangeMin, colorChangeMax, Math.random() * colorChangeRange);
+//         }
+//         if (Math.random() > 0.5) {
+//             randomSaturation = colorChosen.saturation + mapValue(0, colorChangeRange, colorChangeMin, colorChangeMax, Math.random() * colorChangeRange);
+//         }
+//         else {
+//             randomSaturation = colorChosen.saturation - mapValue(0, colorChangeRange, colorChangeMin, colorChangeMax, Math.random() * colorChangeRange);
+//         }
+//         if (Math.random() > 0.5) {
+//             randomBrightness = colorChosen.brightness + mapValue(0, colorChangeRange, colorChangeMin, colorChangeMax, Math.random() * colorChangeRange);
+//         }
+//         else {
+//             randomBrightness = colorChosen.brightness - mapValue(0, colorChangeRange, colorChangeMin, colorChangeMax, Math.random() * colorChangeRange);
+//         }
+//         palette.push({ hue: randomHue, saturation: randomSaturation, brightness: randomBrightness });
+//     }
+//     palette.forEach((color) => {
+//         if (color.brightness > 60 || color.saturation > 70) color.textColor = 'black';
+//         else color.textColor = 'white';
+//         console.log(color);
+//     })
+//     return palette;
+// }
+
+function generatePaletteColors(paletteType = 'complementary') {
     let palette = [];
-
-    //Pick random starting color
-    let startingHue = Math.floor(Math.random() * 360);
-    let startingSaturation = mapValue(0, 100, 20, 80, Math.random() * 100);
-    let startingBrightness = mapValue(0, 100, 35, 80, Math.random() * 100);
-    palette.push({ hue: startingHue, saturation: startingSaturation, brightness: startingBrightness });
-
-    //Define complementary color
-    let complementaryHue = Math.abs(startingHue + 180 % 360);
-    let complementarySaturation = startingSaturation;
-    let complementaryBrightness = startingBrightness;
-    palette.push({ hue: complementaryHue, saturation: complementarySaturation, brightness: complementaryBrightness });
-
-    //Define other 3 colors by picking base color randomly between main and complementary
-    for (let i = 0; i < 3; i++) {
-        let colorChosen;
-        if (Math.random() > 0.5) {
-            colorChosen = {
-                hue: startingHue,
-                saturation: startingSaturation,
-                brightness: startingBrightness,
-            }
-        }
-        else {
-            colorChosen = {
-                hue: startingHue,
-                saturation: startingSaturation,
-                brightness: startingBrightness,
-            }
-        }
-
-        //Define random color based on base color chosen
-        let randomHue;
-        let randomSaturation;
-        let randomBrightness;
-        let colorChangeMin = 5;
-        let colorChangeMax = 15;
-        let colorChangeRange = 10;
-        if (Math.random() > 0.5) {
-            randomHue = colorChosen.hue + mapValue(0, 15, colorChangeMin, colorChangeMax, Math.random() * colorChangeRange);
-        }
-        else {
-            randomHue = colorChosen.hue - mapValue(0, 15, colorChangeMin, colorChangeMax, Math.random() * colorChangeRange);
-        }
-        if (Math.random() > 0.5) {
-            randomSaturation = colorChosen.saturation + mapValue(0, colorChangeRange, colorChangeMin, colorChangeMax, Math.random() * colorChangeRange);
-        }
-        else {
-            randomSaturation = colorChosen.saturation - mapValue(0, colorChangeRange, colorChangeMin, colorChangeMax, Math.random() * colorChangeRange);
-        }
-        if (Math.random() > 0.5) {
-            randomBrightness = colorChosen.brightness + mapValue(0, colorChangeRange, colorChangeMin, colorChangeMax, Math.random() * colorChangeRange);
-        }
-        else {
-            randomBrightness = colorChosen.brightness - mapValue(0, colorChangeRange, colorChangeMin, colorChangeMax, Math.random() * colorChangeRange);
-        }
-        palette.push({ hue: randomHue, saturation: randomSaturation, brightness: randomBrightness });
+    switch (paletteType) {
+        case 'complementary':
+            palette = generateComplementaryPalette();
+            break;
+        case 'monochromatic':
+            palette = generateMonochromaticPalette();
+            break;
+        case 'random':
+            palette = generateRandomPalette();
+            break;
     }
+
     palette.forEach((color) => {
         if (color.brightness > 60 || color.saturation > 70) color.textColor = 'black';
         else color.textColor = 'white';
-        console.log(color);
+        // console.log(color);
     })
     return palette;
 }
@@ -122,7 +145,47 @@ window.onscroll = function () {
     if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
         // you're at the bottom of the page
         for (let i = 0; i < paletteNumber; i++) {
-            generateNewPalette();
+            generateNewPalette(currentPaletteType);
         }
     }
 };
+
+function toggleMenu(menuToToggle) {
+    let menu = document.querySelector(menuToToggle);
+    menu.classList.toggle('visible');
+}
+
+function selectPaletteType(paletteTypeChosen) {
+    let paletteMenu = document.querySelector('#palette-menu');
+    paletteGrid.innerHTML = '';
+    switch (paletteTypeChosen) {
+        case 'complementary':
+            for (let i = 0; i < paletteNumber; i++) {
+                generateNewPalette();
+                currentPaletteType = 'complementary';
+                paletteMenu.innerHTML = `<li onclick="selectPaletteType('complementary')">Complementary <ion-icon name="checkmark-outline" style="color: grey;"></ion-icon></li>
+                <li onclick="selectPaletteType('monochromatic')">Monochromatic</li>
+                <li onclick="selectPaletteType('random')">Random</li>`;
+            }
+            break;
+        case 'monochromatic':
+            for (let i = 0; i < paletteNumber; i++) {
+                generateNewPalette('monochromatic');
+                currentPaletteType = 'monochromatic';
+                paletteMenu.innerHTML = `<li onclick="selectPaletteType('complementary')">Complementary</li>
+                <li onclick="selectPaletteType('monochromatic')">Monochromatic <ion-icon name="checkmark-outline" style="color: grey;"></ion-icon></li>
+                <li onclick="selectPaletteType('random')">Random</li>`;
+            }
+            break;
+        case 'random':
+            for (let i = 0; i < paletteNumber; i++) {
+                generateNewPalette('random');
+                currentPaletteType = 'random';
+                paletteMenu.innerHTML = `<li onclick="selectPaletteType('complementary')">Complementary</li>
+                <li onclick="selectPaletteType('monochromatic')">Monochromatic</li>
+                <li onclick="selectPaletteType('random')">Random  <ion-icon name="checkmark-outline" style="color: grey;"></ion-icon></li>`;
+            }
+            break;
+    }
+    paletteMenu.classList.toggle('visible');
+}
