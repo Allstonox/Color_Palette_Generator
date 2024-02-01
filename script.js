@@ -141,15 +141,6 @@ for (let i = 0; i < paletteNumber; i++) {
     generateNewPalette();
 }
 
-window.onscroll = function () {
-    if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-        // you're at the bottom of the page
-        for (let i = 0; i < paletteNumber; i++) {
-            generateNewPalette(currentPaletteType);
-        }
-    }
-};
-
 function toggleMenu(menuToToggle) {
     let menu = document.querySelector(menuToToggle);
     menu.classList.toggle('visible');
@@ -188,4 +179,17 @@ function selectPaletteType(paletteTypeChosen) {
             break;
     }
     paletteMenu.classList.toggle('visible');
+}
+
+window.onscroll = function () {
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+        // you're at the bottom of the page
+        for (let i = 0; i < paletteNumber; i++) {
+            generateNewPalette(currentPaletteType);
+        }
+    }
+};
+
+window.onbeforeunload = function () {
+    window.scrollTo(0, 0);
 }
