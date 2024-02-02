@@ -1,11 +1,15 @@
 let paletteNumber = 40;
 let paletteGrid = document.querySelector('#palettes');
 let copyMessage = document.querySelector('#copy-message');
-let currentPaletteType = 'complementary';
+let currentPaletteType = 'random';
 
-function generateNewPalette(paletteType = 'complementary') {
+function generateNewPalette(paletteType = 'random') {
+    let newPaletteWrapper = document.createElement('div');
     let newPalette = document.createElement('div');
+    let optionsPanel = document.createElement('div');;
+    newPaletteWrapper.classList.add('palette-wrapper');
     newPalette.classList.add('palette');
+    optionsPanel.classList.add('options-panel');
     let paletteColors = generatePaletteColors(paletteType);
     newPalette.innerHTML = `
             <div class="palette-color" style="background-color: hsl(${paletteColors[0].hue}, ${paletteColors[0].saturation}%, ${paletteColors[0].brightness}%);">
@@ -28,23 +32,11 @@ function generateNewPalette(paletteType = 'complementary') {
         navigator.clipboard.writeText(e.target.innerText);
         toggleCopyMessage(e.target);
     })
-    paletteGrid.appendChild(newPalette);
-}
-
-let copyMessageToggled = false;
-function toggleCopyMessage(paletteClicked) {
-    let originalInnerHTML = paletteClicked.innerHTML;
-    let paletteTextColor = paletteClicked.children[0].style.color;
-    if (!copyMessageToggled) {
-        paletteClicked.innerHTML = `<ion-icon class="color-hexcode" name="checkmark-outline" style="width: 30px; height: 30px; color: ${paletteTextColor}"></ion-icon>`;
-        copyMessage.classList.toggle('slide-fade');
-        copyMessageToggled = true;
-        window.setTimeout(() => {
-            paletteClicked.innerHTML = originalInnerHTML;
-            copyMessage.classList.toggle('slide-fade');
-            copyMessageToggled = false
-        }, 2000)
-    }
+    optionsPanel.innerHTML =`<ion-icon name="heart-outline"></ion-icon>
+                            <ion-icon onclick="togglePaletteInformation(this.parentElement.previousElementSibling, 0, true)" name="ellipsis-horizontal"></ion-icon>`;
+    newPaletteWrapper.appendChild(newPalette);
+    newPaletteWrapper.appendChild(optionsPanel);
+    paletteGrid.appendChild(newPaletteWrapper);
 }
 
 // function generatePaletteColors() {
@@ -115,7 +107,7 @@ function toggleCopyMessage(paletteClicked) {
 //     return palette;
 // }
 
-function generatePaletteColors(paletteType = 'complementary') {
+function generatePaletteColors(paletteType = 'random') {
     let palette = [];
     switch (paletteType) {
         case 'complementary':
@@ -123,6 +115,9 @@ function generatePaletteColors(paletteType = 'complementary') {
             break;
         case 'monochromatic':
             palette = generateMonochromaticPalette();
+            break;
+        case 'analogous':
+            palette = generateAnalogousPalette();
             break;
         case 'random':
             palette = generateRandomPalette();
@@ -146,6 +141,76 @@ function toggleMenu(menuToToggle) {
     menu.classList.toggle('visible');
 }
 
+let copyMessageToggled = false;
+function toggleCopyMessage(paletteClicked) {
+    let originalInnerHTML = paletteClicked.innerHTML;
+    let paletteTextColor = paletteClicked.children[0].style.color;
+    if (!copyMessageToggled) {
+        paletteClicked.innerHTML = `<ion-icon class="color-hexcode" name="checkmark-outline" style="width: 30px; height: 30px; color: ${paletteTextColor}"></ion-icon>`;
+        copyMessage.classList.toggle('slide-fade');
+        copyMessageToggled = true;
+        window.setTimeout(() => {
+            paletteClicked.innerHTML = originalInnerHTML;
+            copyMessage.classList.toggle('slide-fade');
+            copyMessageToggled = false
+        }, 2000)
+    }
+}
+
+function toggleMenu(menuToToggle) {
+    let menu = document.querySelector(menuToToggle);
+    menu.classList.toggle('visible');
+}
+
+function togglePaletteInformation(paletteToDisplay, colorSelected = 0, toggle = false) {
+    let paletteInformation = document.querySelector('#palette-information');
+    let paletteInformationBody = document.querySelector('#palette-information-body');
+    let paletteItemsWrapper = document.querySelector('#palette-items-wrapper');
+    let paletteItemSelected = document.querySelector('#palette-item-selected');
+    let colors = [...paletteToDisplay.children];
+    let textColor = colors[colorSelected].children[0].style.color;
+
+    paletteItemsWrapper.innerHTML = '';
+    console.log(colors);
+    for(let color of colors) {
+        let colorToAdd = document.createElement('div');
+        colorToAdd.classList.add('palette-item');
+        colorToAdd.style.backgroundColor = `${color.style.backgroundColor}`;
+        colorToAdd.style.cursor = 'pointer';
+        colorToAdd.addEventListener('mouseup', (e) => {
+            togglePaletteInformation(paletteToDisplay, colors.indexOf(color));
+        })
+        paletteItemsWrapper.appendChild(colorToAdd);
+    }
+
+    paletteInformationBody.style.backgroundColor = colors[colorSelected].style.backgroundColor;
+    paletteInformationBody.innerHTML = `
+    <div>
+        <p style="color: var(--light-text); font-size: 0.8rem; font-weight: 600;">NAME</p>
+        <p style="font-weight: 600; color: ${textColor}">Spicy Green</p>
+    </div>
+    <div>
+        <p style="color: var(--light-text); font-size: 0.8rem; font-weight: 600;">HEX</p>
+         <p style="font-weight: 600; color: ${textColor}">${colors[colorSelected].children[0].innerText}</p>
+    </div>
+    <div>
+        <p style="color: var(--light-text); font-size: 0.8rem; font-weight: 600;">HSB</p>
+        <p style="font-weight: 600; color: ${textColor}">25, 45, 234</p>
+    </div>
+    <div>
+        <p style="color: var(--light-text); font-size: 0.8rem; font-weight: 600;">HSL</p>
+        <p style="font-weight: 600; color: ${textColor}">${colors[colorSelected].style.backgroundColor}</p>
+    </div>
+    <div>
+        <p style="color: var(--light-text); font-size: 0.8rem; font-weight: 600;">RGB</p>
+        <p style="font-weight: 600; color: ${textColor}">100, 22, 212</p>
+    </div>`
+
+    paletteItemSelected.style.color = textColor;
+    paletteItemSelected.style.left = `calc(14% + ${colorSelected * 18}%)`
+    if(toggle) paletteInformation.classList.toggle('visible');
+}
+
 function selectPaletteType(paletteTypeChosen) {
     let paletteMenu = document.querySelector('#palette-menu');
     paletteGrid.innerHTML = '';
@@ -156,6 +221,7 @@ function selectPaletteType(paletteTypeChosen) {
                 currentPaletteType = 'complementary';
                 paletteMenu.innerHTML = `<li onclick="selectPaletteType('complementary')">Complementary <ion-icon name="checkmark-outline" style="color: grey;"></ion-icon></li>
                 <li onclick="selectPaletteType('monochromatic')">Monochromatic</li>
+                <li onclick="selectPaletteType('analogous')">Analogous</li>
                 <li onclick="selectPaletteType('random')">Random</li>`;
             }
             break;
@@ -165,6 +231,17 @@ function selectPaletteType(paletteTypeChosen) {
                 currentPaletteType = 'monochromatic';
                 paletteMenu.innerHTML = `<li onclick="selectPaletteType('complementary')">Complementary</li>
                 <li onclick="selectPaletteType('monochromatic')">Monochromatic <ion-icon name="checkmark-outline" style="color: grey;"></ion-icon></li>
+                <li onclick="selectPaletteType('analogous')">Analogous</li>
+                <li onclick="selectPaletteType('random')">Random</li>`;
+            }
+            break;
+        case 'analogous':
+            for (let i = 0; i < paletteNumber; i++) {
+                generateNewPalette('analogous');
+                currentPaletteType = 'analogous';
+                paletteMenu.innerHTML = `<li onclick="selectPaletteType('complementary')">Complementary</li>
+                <li onclick="selectPaletteType('monochromatic')">Monochromatic</li>
+                <li onclick="selectPaletteType('analogous')">Analogous <ion-icon name="checkmark-outline" style="color: grey;"></ion-icon></li>
                 <li onclick="selectPaletteType('random')">Random</li>`;
             }
             break;
@@ -174,6 +251,7 @@ function selectPaletteType(paletteTypeChosen) {
                 currentPaletteType = 'random';
                 paletteMenu.innerHTML = `<li onclick="selectPaletteType('complementary')">Complementary</li>
                 <li onclick="selectPaletteType('monochromatic')">Monochromatic</li>
+                <li onclick="selectPaletteType('analogous')">Analogous</li>
                 <li onclick="selectPaletteType('random')">Random  <ion-icon name="checkmark-outline" style="color: grey;"></ion-icon></li>`;
             }
             break;

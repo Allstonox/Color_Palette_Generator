@@ -10,6 +10,7 @@
 
 :root {
     --light-text: grey;
+    --bg: white;
 }
 
 html {
@@ -23,7 +24,7 @@ html {
     /* IE/Edge */
     user-select: none;
     /* Standard */
-    background-color: white;
+    background-color: var(--bg);
 }
 
 body {
@@ -37,7 +38,7 @@ body {
     height: auto;
     width: 100%;
     max-width: 1300px;
-    background-color: white;
+    background-color: var(--bg);
     overflow-x: hidden;
 }
 
@@ -104,7 +105,7 @@ nav #palette-type:hover, nav #palette-type:hover > ion-icon {
     color: black !important
 }
 
-nav ul {
+nav #palette-menu {
     visibility: hidden;
     pointer-events: none;
     position: absolute;
@@ -140,7 +141,14 @@ nav ul li:hover {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(auto, 1fr);
-    gap: 4em 2rem;
+    gap: 3rem 2rem;
+}
+
+.palette-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    height: auto;
 }
 
 .palette {
@@ -185,9 +193,109 @@ nav ul li:hover {
     opacity: 1;
 }
 
+.options-panel {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    padding: 0.25rem 0.75rem;
+}
+
+.options-panel ion-icon {
+    color: var(--light-text); 
+    width: 1.5rem; 
+    height: 1.5rem;
+    cursor: pointer;
+}
+
+#palette-information {
+    visibility: hidden;
+    pointer-events: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    height: 500px;
+    background-color: #160b1e;
+    border-radius: 1rem;
+    box-shadow: 0 0 0 100vmax rgba(0,0,0,.3);
+    overflow: hidden;
+}
+
+#palette-information-header {
+    position: relative;
+    width: 100%;
+    height: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+}
+
+#palette-information-header ion-icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 10px;
+    color: black;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+}
+
+#palette-information-body {
+    width: 100%;
+    height: 70%;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+#palette-information-body > div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+#palette-information-footer {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 20%;
+    background-color: white;
+}
+
+#palette-items-wrapper {
+    display: flex;
+    width: 90%;
+    height: 50%;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.palette-item {
+    width: 100%;
+    height: 100%;
+}
+
+#palette-item-selected {
+    width: 15px;
+    height: 15px;
+    color: rgb(61, 61, 61);
+    position: absolute;
+    top: 50%;
+    left: 14%;
+    transform: translate(-50%, -50%);
+    transition: left linear 0.1s;
+    pointer-events: none;
+}
+
 .visible {
-    visibility: visible;
-    pointer-events: all;
+    visibility: visible !important;
+    pointer-events: all !important;
 }
 
 @media screen and (max-width:900px) {

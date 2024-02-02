@@ -17,14 +17,79 @@
             most boosted color palette generator online!</h3>
     </section>
     <nav>
-        <div onclick="toggleMenu('#palette-menu')" id="palette-type">Palette Type <ion-icon name="chevron-down-outline" style="color: var(--light-text);"></ion-icon></div>
+        <div onclick="toggleMenu('#palette-menu')" id="palette-type">Palette Type <ion-icon name="chevron-down-outline"
+                style="color: var(--light-text);"></ion-icon></div>
         <ul id="palette-menu">
-            <li onclick="selectPaletteType('complementary')">Complementary <ion-icon name="checkmark-outline" style="color: grey;"></ion-icon></li>
+            <li onclick="selectPaletteType('complementary')">Complementary</li>
             <li onclick="selectPaletteType('monochromatic')">Monochromatic</li>
-            <li onclick="selectPaletteType('random')">Random</li>
+            <li onclick="selectPaletteType('analogous')">Analogous</li>
+            <li onclick="selectPaletteType('random')">Random <ion-icon name="checkmark-outline"
+                    style="color: grey;"></ion-icon></li>
         </ul>
     </nav>
-    <div id="palettes"></div>
+    <div id="palettes">
+        <!-- <div class="palette-wrapper">
+            <div class="palette">
+                <div class="palette-color" style="background-color: red;">
+                    <div class="color-hexcode" style="color: black">hi</div>
+                </div>
+                <div class="palette-color" style="background-color: violet;">
+                    <div class="color-hexcode" style="color: black">hi</div>
+                </div>
+                <div class="palette-color" style="background-color: gray;">
+                    <div class="color-hexcode" style="color: black">hi</div>
+                </div>
+                <div class="palette-color" style="background-color: green;">
+                    <div class="color-hexcode" style="color: black">hi</div>
+                </div>
+                <div class="palette-color" style="background-color: goldenrod;">
+                    <div class="color-hexcode" style="color: black">hi</div>
+                </div>
+            </div>
+            <div class="options-panel">
+                <ion-icon name="heart-outline"></ion-icon>
+                <ion-icon name="ellipsis-horizontal"></ion-icon>
+            </div>
+        </div> -->
+    </div>
+    <div id="palette-information">
+        <div id="palette-information-header">
+            <p style="color: black; font-size: 1.25rem; font-weight: 600;">Palette Details</p>
+            <ion-icon onclick="toggleMenu('#palette-information')" name="close-outline"></ion-icon>
+        </div>
+        <div id="palette-information-body">
+            <div>
+                <p style="color: var(--light-text); font-size: 0.8rem; font-weight: 600;">NAME</p>
+                <p style="font-weight: 600;">Spicy Green</p>
+            </div>
+            <div>
+                <p style="color: var(--light-text); font-size: 0.8rem; font-weight: 600;">HEX</p>
+                <p style="font-weight: 600;">03071E</p>
+            </div>
+            <div>
+                <p style="color: var(--light-text); font-size: 0.8rem; font-weight: 600;">HSB</p>
+                <p style="font-weight: 600;">25, 45, 234</p>
+            </div>
+            <div>
+                <p style="color: var(--light-text); font-size: 0.8rem; font-weight: 600;">HSL</p>
+                <p style="font-weight: 600;">57, 75, 99</p>
+            </div>
+            <div>
+                <p style="color: var(--light-text); font-size: 0.8rem; font-weight: 600;">RGB</p>
+                <p style="font-weight: 600;">100, 22, 212</p>
+            </div>
+        </div>
+        <div id="palette-information-footer">
+            <div id="palette-items-wrapper">
+                <div class="palette-item" style="background-color: aqua;"></div>
+                <div class="palette-item" style="background-color: gold;"></div>
+                <div class="palette-item" style="background-color: green;"></div>
+                <div class="palette-item" style="background-color: blueviolet;"></div>
+                <div class="palette-item" style="background-color: firebrick;"></div>
+            </div>
+            <ion-icon id="palette-item-selected" name="ellipse"></ion-icon>
+        </div>
+    </div>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <script src="utils.js"></script>
