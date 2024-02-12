@@ -360,6 +360,26 @@ nav #palette-menu li:hover {
 
 @media screen and (max-width:500px) {
     nav #palette-type, nav #main-menu li a, nav #palette-menu li {
+        font-size: 1.25rem;
+    } 
+
+    #palettes {
+        grid-template-columns: repeat(1, 1fr);
+        grid-template-rows: repeat(auto, 1fr);
+    }
+
+    #intro-wrapper h1 {
+        font-size: 2.5rem !important;
+    }
+
+    #intro-wrapper h3 {
+        width: 90% !important;
+        font-size: 1.5rem !important;
+    }
+}
+
+@media screen and (max-width:382px) {
+    nav #palette-type, nav #main-menu li a, nav #palette-menu li {
         font-size: 1rem;
     } 
 
