@@ -3,6 +3,7 @@ let paletteGrid = document.querySelector('#palettes');
 let copyMessage = document.querySelector('#copy-message');
 let likeMessage = document.querySelector('#like-message');
 let currentPaletteType = 'random';
+let viewingFavorites = false;
 
 function generateNewPalette(paletteType = 'random') {
     let newPaletteWrapper = document.createElement('div');
@@ -63,8 +64,13 @@ function generatePaletteColors(paletteType = 'random') {
     return palette;
 }
 
-for (let i = 0; i < paletteNumber; i++) {
-    generateNewPalette();
+function initialize() {
+    viewingFavorites = false;
+    paletteGrid.innerHTML = ``;
+    for (let i = 0; i < paletteNumber; i++) {
+        generateNewPalette();
+    }
+    selectPaletteType('random');
 }
 
 function toggleMenu(menuToToggle) {
@@ -176,15 +182,15 @@ async function fetchColorInformation(color) {
 
 let likeMessageToggled = false;
 let likedPalettes;
-if(localStorage.getItem('Likes')) likedPalettes = JSON.parse(localStorage.getItem('Likes'));
+if (localStorage.getItem('Likes')) likedPalettes = JSON.parse(localStorage.getItem('Likes'));
 else likedPalettes = [];
 function toggleLikes(heartSelected) {
     if (heartSelected.name === 'heart-outline' && !likeMessageToggled) {
-        likedPalettes.push(heartSelected.closest('.options-panel').previousSibling);
+        likedPalettes.push(heartSelected.closest('.options-panel').previousSibling.innerHTML);
         localStorage.setItem('Likes', JSON.stringify(likedPalettes));
         heartSelected.name = 'heart';
         heartSelected.style.color = 'pink';
-        likeMessage.innerHTML = 'Palette added to likes!';
+        likeMessage.innerHTML = 'Palette added to favorites!';
         likeMessage.classList.toggle('slide-fade');
         likeMessageToggled = true;
         window.setTimeout(() => {
@@ -192,12 +198,38 @@ function toggleLikes(heartSelected) {
             likeMessageToggled = false;
         }, 2000)
     }
-    else if(!likeMessageToggled) {
-        likedPalettes.splice(likedPalettes.indexOf(heartSelected.closest('.options-panel').previousSibling), 1);
+}
+
+function loadLikedPalettes() {
+    viewingFavorites = true;
+    let likesToLoad = JSON.parse(localStorage.getItem('Likes'));
+    paletteGrid.innerHTML = ``;
+    for (let i = 0; i < likesToLoad.length; i++) {
+        let newPaletteWrapper = document.createElement('div');
+        let newPalette = document.createElement('div');
+        let optionsPanel = document.createElement('div');;
+        newPaletteWrapper.classList.add('palette-wrapper');
+        newPalette.classList.add('palette');
+        optionsPanel.classList.add('options-panel');
+        newPalette.innerHTML = `${likesToLoad[i]}`;
+        newPalette.addEventListener('mouseup', (e) => {
+            toggleCopy(e.target, toggle = true);
+        })
+        optionsPanel.innerHTML = `<ion-icon onclick="deletePalette(this.parentElement.parentElement)" name="trash-outline"></ion-icon>
+                                <ion-icon onclick="togglePaletteInformation(this.parentElement.previousElementSibling, 0, true)" name="ellipsis-horizontal"></ion-icon>`;
+        newPaletteWrapper.appendChild(newPalette);
+        newPaletteWrapper.appendChild(optionsPanel);
+        paletteGrid.appendChild(newPaletteWrapper);
+    }
+}
+
+function deletePalette(paletteSelected) {
+    if (!likeMessageToggled) {
+        let paletteChildren = [...paletteSelected.parentElement.children];
+        likedPalettes.splice(paletteChildren.indexOf(paletteSelected), 1);
         localStorage.setItem('Likes', JSON.stringify(likedPalettes));
-        heartSelected.name = 'heart-outline';
-        heartSelected.style.color = 'var(--light-text)';
-        likeMessage.innerHTML = 'Palette removed from likes!';
+        paletteSelected.remove();
+        likeMessage.innerHTML = 'Palette removed from favorites!';
         likeMessage.classList.toggle('slide-fade');
         likeMessageToggled = true;
         window.setTimeout(() => {
@@ -209,6 +241,7 @@ function toggleLikes(heartSelected) {
 
 function selectPaletteType(paletteTypeChosen) {
     let paletteMenu = document.querySelector('#palette-menu');
+    viewingFavorites = false;
     paletteGrid.innerHTML = '';
     switch (paletteTypeChosen) {
         case 'complementary':
@@ -252,11 +285,11 @@ function selectPaletteType(paletteTypeChosen) {
             }
             break;
     }
-    paletteMenu.classList.toggle('visible');
+    if (paletteMenu.classList.contains('visible')) paletteMenu.classList.toggle('visible');
 }
 
 window.onscroll = function () {
-    if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight && !viewingFavorites) {
         // you're at the bottom of the page
         for (let i = 0; i < paletteNumber; i++) {
             generateNewPalette(currentPaletteType);
@@ -267,3 +300,5 @@ window.onscroll = function () {
 window.onbeforeunload = function () {
     window.scrollTo(0, 0);
 }
+
+initialize();
