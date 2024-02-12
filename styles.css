@@ -42,7 +42,7 @@ body {
     overflow-x: hidden;
 }
 
-#copy-message {
+#copy-message, #like-message {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -85,24 +85,20 @@ body {
 nav {
     position: relative;
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
     width: 100%;
     margin-bottom: 2rem;
 }
 
 nav #palette-type {
     padding: 1rem 0rem;
-    color: var(--light-text);
+    color: black;
     width: fit-content;
     display: flex;
     align-items: center;
     gap: 0.5rem;
     cursor: pointer;
     font-size: 1.25rem;
-}
-
-nav #palette-type:hover, nav #palette-type:hover > ion-icon {
-    color: black !important
 }
 
 nav #palette-menu {
@@ -120,7 +116,24 @@ nav #palette-menu {
     z-index: 100;
 }
 
-nav ul li {
+nav #main-menu {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0rem 1rem;
+    gap: 1rem;
+}
+
+nav #main-menu li a{
+    color: black;
+    list-style: none;
+    font-size: 1.25rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+nav #palette-menu li {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -130,7 +143,7 @@ nav ul li {
     font-size: 1.25rem;
 }
 
-nav ul li:hover {
+nav #palette-menu li:hover {
     background-color: rgb(216, 216, 216);
 }
 
@@ -215,7 +228,7 @@ nav ul li:hover {
     left: 50%;
     transform: translate(-50%, -50%);
     width: clamp(300px, 90vw, 400px);
-    height: 500px;
+    height: auto;
     background-color: #160b1e;
     border-radius: 1rem;
     box-shadow: 0 0 0 100vmax rgba(0,0,0,.3);
@@ -225,7 +238,7 @@ nav ul li:hover {
 #palette-information-header {
     position: relative;
     width: 100%;
-    height: 10%;
+    height: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -245,7 +258,7 @@ nav ul li:hover {
 
 #palette-information-body {
     width: 100%;
-    height: 70%;
+    height: auto;
     padding: 1rem 0.5rem;
     display: flex;
     flex-direction: column;
@@ -288,7 +301,7 @@ nav ul li:hover {
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 20%;
+    height: 90px;
     background-color: white;
 }
 
@@ -343,13 +356,17 @@ nav ul li:hover {
 }
 
 @media screen and (max-width:500px) {
+    nav #palette-type, nav #main-menu li a, nav #palette-menu li {
+        font-size: 1rem;
+    } 
+
     #palettes {
         grid-template-columns: repeat(1, 1fr);
         grid-template-rows: repeat(auto, 1fr);
     }
 
     #intro-wrapper h1 {
-        font-size: 2.5rem !important;
+        font-size: 2.25rem !important;
     }
 
     #intro-wrapper h3 {

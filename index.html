@@ -11,6 +11,7 @@
 
 <body>
     <div id="copy-message"><ion-icon name="checkmark-outline"></ion-icon>Color copied to clipboard!</div>
+    <div id="like-message"><ion-icon name="checkmark-outline"></ion-icon>Palette added to likes!</div>
     <section id="intro-wrapper">
         <h1 style="color: black; font-size: 4rem; font-weight: 600; letter-spacing: -3px;">Allston's Sweet Colors!</h1>
         <h3 style="width: 50%; text-align: center; color: rgb(125, 125, 125); font-size: 1.5rem; font-weight: 100;">The
@@ -25,6 +26,10 @@
             <li onclick="selectPaletteType('analogous')">Analogous</li>
             <li onclick="selectPaletteType('random')">Random <ion-icon name="checkmark-outline"
                     style="color: grey;"></ion-icon></li>
+        </ul>
+        <ul id="main-menu">
+            <li><a href="#">Explore</a></li>
+            <li><a href="#">Favorites</a></li>
         </ul>
     </nav>
     <div id="palettes">
@@ -58,7 +63,7 @@
             <ion-icon onclick="toggleMenu('#palette-information')" name="close-outline"></ion-icon>
         </div>
         <div id="palette-information-body">
-            <div data-content="Copy" onclick="toggleCopyMessage(this)">
+            <!-- <div data-content="Copy" onclick="toggleCopyMessage(this)">
                 <p style="color: var(--light-text); font-size: 0.8rem; font-weight: 600;">NAME</p>
                 <p style="font-weight: 600;">Spicy Green</p>
             </div>
@@ -77,15 +82,15 @@
             <div data-content="Copy" onclick="toggleCopyMessage(this)">
                 <p style="color: var(--light-text); font-size: 0.8rem; font-weight: 600;">RGB</p>
                 <p style="font-weight: 600;">100, 22, 212</p>
-            </div>
+            </div> -->
         </div>
         <div id="palette-information-footer">
             <div id="palette-items-wrapper">
-                <div class="palette-item" style="background-color: aqua;"></div>
+                <!-- <div class="palette-item" style="background-color: aqua;"></div>
                 <div class="palette-item" style="background-color: gold;"></div>
                 <div class="palette-item" style="background-color: green;"></div>
                 <div class="palette-item" style="background-color: blueviolet;"></div>
-                <div class="palette-item" style="background-color: firebrick;"></div>
+                <div class="palette-item" style="background-color: firebrick;"></div> -->
             </div>
             <ion-icon id="palette-item-selected" name="ellipse"></ion-icon>
         </div>

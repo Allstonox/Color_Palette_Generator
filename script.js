@@ -1,6 +1,7 @@
 let paletteNumber = 40;
 let paletteGrid = document.querySelector('#palettes');
 let copyMessage = document.querySelector('#copy-message');
+let likeMessage = document.querySelector('#like-message');
 let currentPaletteType = 'random';
 
 function generateNewPalette(paletteType = 'random') {
@@ -31,7 +32,7 @@ function generateNewPalette(paletteType = 'random') {
     newPalette.addEventListener('mouseup', (e) => {
         toggleCopy(e.target, toggle = true);
     })
-    optionsPanel.innerHTML = `<ion-icon onclick="toggleLikes()" name="heart-outline"></ion-icon>
+    optionsPanel.innerHTML = `<ion-icon onclick="toggleLikes(this)" name="heart-outline"></ion-icon>
                             <ion-icon onclick="togglePaletteInformation(this.parentElement.previousElementSibling, 0, true)" name="ellipsis-horizontal"></ion-icon>`;
     newPaletteWrapper.appendChild(newPalette);
     newPaletteWrapper.appendChild(optionsPanel);
@@ -170,6 +171,39 @@ async function fetchColorInformation(color) {
         return { colorName: name, colorHex: hex, colorHSB: hsb, colorHSL: hsl, colorRGB: rgb };
     } catch (err) {
         console.log(err)
+    }
+}
+
+let likeMessageToggled = false;
+let likedPalettes;
+if(localStorage.getItem('Likes')) likedPalettes = JSON.parse(localStorage.getItem('Likes'));
+else likedPalettes = [];
+function toggleLikes(heartSelected) {
+    if (heartSelected.name === 'heart-outline' && !likeMessageToggled) {
+        likedPalettes.push(heartSelected.closest('.options-panel').previousSibling);
+        localStorage.setItem('Likes', JSON.stringify(likedPalettes));
+        heartSelected.name = 'heart';
+        heartSelected.style.color = 'pink';
+        likeMessage.innerHTML = 'Palette added to likes!';
+        likeMessage.classList.toggle('slide-fade');
+        likeMessageToggled = true;
+        window.setTimeout(() => {
+            likeMessage.classList.toggle('slide-fade');
+            likeMessageToggled = false;
+        }, 2000)
+    }
+    else if(!likeMessageToggled) {
+        likedPalettes.splice(likedPalettes.indexOf(heartSelected.closest('.options-panel').previousSibling), 1);
+        localStorage.setItem('Likes', JSON.stringify(likedPalettes));
+        heartSelected.name = 'heart-outline';
+        heartSelected.style.color = 'var(--light-text)';
+        likeMessage.innerHTML = 'Palette removed from likes!';
+        likeMessage.classList.toggle('slide-fade');
+        likeMessageToggled = true;
+        window.setTimeout(() => {
+            likeMessage.classList.toggle('slide-fade');
+            likeMessageToggled = false;
+        }, 2000)
     }
 }
 
