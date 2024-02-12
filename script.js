@@ -118,24 +118,24 @@ async function togglePaletteInformation(paletteToDisplay, colorSelected = 0, tog
 
     let content = await fetchColorInformation(colorHexadecimalVal);
     paletteInformationBody.innerHTML = `
-    <div data-content="Copy" onclick="toggleCopy(this)">
-        <p style="color: var(--light-text); font-size: 0.8rem; font-weight: 600;">NAME</p>
+    <div data-content="Copy" data-text-color="${textColor}" onclick="toggleCopy(this)">
+        <p style="color: ${textColor}; font-size: 0.8rem; font-weight: 600;">NAME</p>
         <p style="font-weight: 600; color: ${textColor};">${content.colorName}</p>
     </div>
-    <div data-content="Copy" onclick="toggleCopy(this)">
-        <p style="color: var(--light-text); font-size: 0.8rem; font-weight: 600;">HEX</p>
+    <div data-content="Copy" data-text-color="${textColor}" onclick="toggleCopy(this)">
+        <p style="color: ${textColor}; font-size: 0.8rem; font-weight: 600;">HEX</p>
          <p style="font-weight: 600; color: ${textColor};">${content.colorHex}</p>
     </div>
-    <div data-content="Copy" onclick="toggleCopy(this)">
-        <p style="color: var(--light-text); font-size: 0.8rem; font-weight: 600;">HSV</p>
+    <div data-content="Copy" data-text-color="${textColor}" onclick="toggleCopy(this)">
+        <p style="color: ${textColor}; font-size: 0.8rem; font-weight: 600;">HSV</p>
         <p style="font-weight: 600; color: ${textColor};">${content.colorHSB}</p>
     </div>
-    <div data-content="Copy" onclick="toggleCopy(this)">
-        <p style="color: var(--light-text); font-size: 0.8rem; font-weight: 600;">HSL</p>
+    <div data-content="Copy" data-text-color="${textColor}" onclick="toggleCopy(this)">
+        <p style="color: ${textColor}; font-size: 0.8rem; font-weight: 600;">HSL</p>
         <p style="font-weight: 600; color: ${textColor};">${content.colorHSL}</p>
     </div>
-    <div data-content="Copy" onclick="toggleCopy(this)">
-        <p style="color: var(--light-text); font-size: 0.8rem; font-weight: 600;">RGB</p>
+    <div data-content="Copy" data-text-color="${textColor}" onclick="toggleCopy(this)">
+        <p style="color: ${textColor}; font-size: 0.8rem; font-weight: 600;">RGB</p>
         <p style="font-weight: 600; color: ${textColor};">${content.colorRGB}</p>
     </div>`
 

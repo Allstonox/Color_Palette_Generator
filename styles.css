@@ -283,8 +283,11 @@ nav #palette-menu li:hover {
     right: 20px;
     transform: translateY(-50%);
     opacity: 0;
-    color: var(--light-text);
     font-weight: 600;
+}
+
+#palette-information-body > div[data-text-color="black"]::after{
+    color: black;
 }
 
 #palette-information-body > div:hover {
